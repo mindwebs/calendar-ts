@@ -3,13 +3,18 @@ import dayjs from "dayjs";
 import "./Day.css";
 import { Typography, Row, Col, Divider } from "antd";
 
-export default function Day({ day, timeArr }: any) {
+export default function Day({
+  day,
+  timeArr,
+  currentMonthCount,
+  heheMatrix,
+}: any) {
   // console.log(day);
   const { Title } = Typography;
 
   return (
     <>
-      <button>Inc</button>
+      <button onClick={() => heheMatrix()}>Inc</button>
       <div style={{ display: "flex" }}>
         <div style={{ width: "3vw" }}>
           <Title level={5}>&nbsp; </Title>

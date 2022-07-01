@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { Button, Col, Row } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Button, Col, Row, Menu } from "antd";
 import Day from "../Day";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
@@ -33,13 +32,29 @@ export default function CalendarStructure() {
   const firstDayOfTheMonth = dayjs(new Date(year, month, 1)).day();
   console.log("firstDay", firstDayOfTheMonth);
 
-  let currentMonthCount = 0 - firstDayOfTheMonth;
+  var currentMonthCount = 0 - firstDayOfTheMonth;
   console.log(currentMonthCount);
 
   const weeksMatrix = new Array(7).fill(null).map(() => {
     currentMonthCount++;
     return dayjs(new Date(year, 6, currentMonthCount));
   });
+
+  const [weekMatrix, setWeekMatrix]: any = useState(weeksMatrix);
+  const [weekCount, setWeekCount]: any = useState(currentMonthCount);
+
+  function heheMatrix() {
+    console.log("HEYO", currentMonthCount);
+    currentMonthCount = weekCount;
+    const weeksMatrix = new Array(7).fill(null).map(() => {
+      currentMonthCount++;
+      return dayjs(new Date(year, 6, currentMonthCount));
+    });
+    console.log("Fuck off", currentMonthCount);
+    setWeekCount(currentMonthCount);
+    setWeekMatrix(weeksMatrix);
+    // return weeksMatrix;
+  }
 
   const timeArr = [];
   for (let index = 0; index < 24; index++) {
@@ -53,18 +68,27 @@ export default function CalendarStructure() {
   //   });
   // });
 
-  // console.log(daysMatrix);
-  console.log(weeksMatrix);
+  console.log("WEEK", weekMatrix);
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Row>
-        <Col xs={24} xl={4}>
-          {/* <Sidebar /> */}
+        <Col xs={24} xl={collapsed ? 1 : 4}>
+          <Sidebar collapsed={collapsed} />
         </Col>
-        <Col xs={24} xl={20}>
-          <Day day={weeksMatrix} timeArr={timeArr} />
+        <Col
+          xs={24}
+          xl={collapsed ? 23 : 20}
+          style={{ paddingLeft: collapsed ? "2vw" : "0" }}
+        >
+          <Day
+            day={weekMatrix}
+            timeArr={timeArr}
+            currentMonthCount={currentMonthCount}
+            heheMatrix={heheMatrix}
+          />
         </Col>
       </Row>
     </div>

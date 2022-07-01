@@ -1,19 +1,19 @@
 import React from "react";
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
-
-const { Header, Sider, Content } = Layout;
+import { Menu } from "antd";
 
 export default function Sidebar({ collapsed }: any) {
   return (
-    <div>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <>
+      <div
+        style={{
+          width: collapsed ? "100%" : "90%",
+        }}
+      >
         <div className="logo" />
         <Menu
           theme="dark"
@@ -37,7 +37,7 @@ export default function Sidebar({ collapsed }: any) {
             },
           ]}
         />
-      </Sider>
-    </div>
+      </div>
+    </>
   );
 }

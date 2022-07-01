@@ -1,0 +1,9 @@
+.date {
+    font-weight: 500;
+}
+.timeBlocks {
+    height: 4rem;
+    border: 0.5px solid #DADCE0;
+    border-bottom: none;
+    border-right: none;
+}

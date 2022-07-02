@@ -1,7 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "./Day.css";
 import { Typography, Row, Col, Divider } from "antd";
+
+import EventModal from "../EventModal/EventModal";
 
 export default function Day({
   day,
@@ -11,6 +13,46 @@ export default function Day({
 }: any) {
   // console.log(day);
   const { Title } = Typography;
+
+  const [eventModalInfo, setEventModalInfo]: any = useState();
+  const [openEventModal, setOpenEventModal]: any = useState(false);
+  //Add events
+  const [savedEvents, setSavedEvents]: any = useState([]);
+  const [eachDayEvent, setEachDayEvent]: any = useState([]);
+
+  useEffect(() => {
+    // const events = savedEvents.filter(
+    //   (evt: any) =>
+    //     dayjs(evt.day).format("DD-MM-YY") ===
+    //     day.map((oneDay: any) => {
+    //       console.log(dayjs(evt.day).format("DD-MM-YY"));
+    //       console.log("Pweasee", oneDay);
+    //       return oneDay.format("DD-MM-YY");
+    //     })
+    // );
+    var events;
+    events = day.map((oneDay: any) => {
+      return savedEvents.filter(
+        (evt: any) =>
+          dayjs(evt.day).format("DD-MM-YY") === oneDay.format("DD-MM-YY")
+      );
+    });
+    console.log("Bitch entering", events);
+    setEachDayEvent(events);
+  }, [savedEvents]);
+  console.log("Mein dhyanya ho gya prabhu", eachDayEvent);
+
+  function handleOpenEventModal(oneDay: any, oneTime: number) {
+    setEventModalInfo({ oneDay, oneTime });
+    setOpenEventModal(true);
+  }
+
+  function handleCloseEventModal() {
+    setOpenEventModal(false);
+    setEventModalInfo(null);
+  }
+
+  console.log("Saved Events", savedEvents);
 
   return (
     <>
@@ -24,7 +66,7 @@ export default function Day({
           {timeArr.map((oneTime: number) => {
             return (
               <p
-                style={{ margin: "0", borderLeft: "none" }}
+                style={{ margin: "0", borderLeft: "none", height: "4rem" }}
                 className="timeBlocks"
               >
                 <span style={{ position: "relative", top: "-12px" }}>
@@ -52,25 +94,48 @@ export default function Day({
               </Title>
               {timeArr.map((oneTime: number) => {
                 return (
-                  <Title
-                    level={4}
+                  <div
                     className="timeBlocks"
-                    style={{ margin: "0" }}
+                    style={{ height: "4rem", cursor: "pointer" }}
+                    onClick={() => handleOpenEventModal(oneDay, oneTime)}
                   >
-                    {oneTime}
-                    {/* <Divider plain>{oneTime}</Divider> */}
-                  </Title>
+                    <Title level={4} style={{ margin: "0" }}>
+                      {oneTime}
+                    </Title>
+                    <span>
+                      {savedEvents.length > 0 &&
+                        savedEvents.map((event: any) => {
+                          console.log(event);
+                          if (
+                            oneDay.format("DD-MM-YY") === event.dayMe &&
+                            oneTime === event.startTime
+                          ) {
+                            console.log("Wohooo", event);
+                            return (
+                              <span
+                                style={{ backgroundColor: event.labelColor }}
+                              >
+                                {event.title ? event.title : ""}
+                              </span>
+                            );
+                          }
+                        })}
+                    </span>
+                  </div>
                 );
               })}
-              {/* <p>
-              {timeArr.map((oneTime: number) => {
-                return <span>{oneTime}</span>;
-              })}
-            </p> */}
             </div>
           );
         })}
       </div>
+
+      <EventModal
+        eventModalInfo={eventModalInfo}
+        openEventModal={openEventModal}
+        handleCloseEventModal={handleCloseEventModal}
+        savedEvents={savedEvents}
+        setSavedEvents={setSavedEvents}
+      />
     </>
   );
 }

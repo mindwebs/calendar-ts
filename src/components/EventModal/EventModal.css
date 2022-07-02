@@ -1,0 +1,12 @@
+.eventModalCard {
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%);
+}
+.colorOptionsSelect {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}

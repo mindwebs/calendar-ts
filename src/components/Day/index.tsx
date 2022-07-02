@@ -9,7 +9,7 @@ export default function Day({
   day,
   timeArr,
   currentMonthCount,
-  heheMatrix,
+  handleWeekChange,
 }: any) {
   // console.log(day);
   const { Title } = Typography;
@@ -37,10 +37,10 @@ export default function Day({
           dayjs(evt.day).format("DD-MM-YY") === oneDay.format("DD-MM-YY")
       );
     });
-    console.log("Bitch entering", events);
+    console.log("events", events);
     setEachDayEvent(events);
   }, [savedEvents]);
-  console.log("Mein dhyanya ho gya prabhu", eachDayEvent);
+  console.log("eachDayEvent", eachDayEvent);
 
   function handleOpenEventModal(oneDay: any, oneTime: number) {
     setEventModalInfo({ oneDay, oneTime });
@@ -56,7 +56,6 @@ export default function Day({
 
   return (
     <>
-      <button onClick={() => heheMatrix()}>Inc</button>
       <div style={{ display: "flex" }}>
         <div style={{ width: "3vw" }}>
           <Title level={5}>&nbsp; </Title>

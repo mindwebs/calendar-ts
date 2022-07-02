@@ -1,17 +1,64 @@
-import React, { useState } from "react";
+import dayjs from "dayjs";
 import "./Navbar.css";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  LeftOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Typography, Row, Col } from "antd";
 
 const { Header } = Layout;
+const { Title } = Typography;
 
-export default function Navbar({ collapsed, setCollapsed }: any) {
+export default function Navbar({
+  collapsed,
+  setCollapsed,
+  handleWeekForward,
+  handleWeekBackward,
+}: any) {
   return (
     <>
-      <Header className="site-layout-background navbar" style={{ padding: 0 }}>
-        <span className="trigger" onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </span>
+      <Header className="navbar">
+        <Row>
+          <Col xs={24} xl={4}>
+            <div style={{ display: "flex" }}>
+              {collapsed ? (
+                <MenuUnfoldOutlined
+                  className="toggleCollapseBtn"
+                  onClick={() => setCollapsed(!collapsed)}
+                />
+              ) : (
+                <MenuFoldOutlined
+                  className="toggleCollapseBtn"
+                  onClick={() => setCollapsed(!collapsed)}
+                />
+              )}
+              <img
+                className="logo"
+                src="//ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_3_2x.png#"
+                alt=""
+              />
+              <Title level={3} className="calendarHeading">
+                Calendar
+              </Title>
+            </div>
+          </Col>
+          <Col xs={24} xl={20}>
+            <Button className="todayBtn">Today</Button>
+            <LeftOutlined
+              className="nav_weekChangeArrowBtns"
+              onClick={() => handleWeekBackward()}
+            />
+            <RightOutlined
+              className="nav_weekChangeArrowBtns"
+              onClick={() => handleWeekForward()}
+            />
+            <Title level={3} className="nav_currentMonth">
+              Calendar
+            </Title>
+          </Col>
+        </Row>
       </Header>
     </>
   );

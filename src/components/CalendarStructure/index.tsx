@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { Button, Col, Row, Menu } from "antd";
 import Day from "../Day";
@@ -26,6 +26,8 @@ export default function CalendarStructure() {
 
   // console.log(dayjs().diff(dayjs("2018-06-27"), "day"));
   // console.log("ÖKKK");
+  const [collapsed, setCollapsed] = useState(false);
+
   const year = dayjs().year();
   const month = dayjs().month();
   // const firstDayOfTheMonth = dayjs().startOf("month");
@@ -40,20 +42,27 @@ export default function CalendarStructure() {
     return dayjs(new Date(year, 6, currentMonthCount));
   });
 
-  const [weekMatrix, setWeekMatrix]: any = useState(weeksMatrix);
+  const [weekData, setWeekData]: any = useState(weeksMatrix);
   const [weekCount, setWeekCount]: any = useState(currentMonthCount);
 
-  function heheMatrix() {
-    console.log("HEYO", currentMonthCount);
+  function handleWeekForward() {
     currentMonthCount = weekCount;
     const weeksMatrix = new Array(7).fill(null).map(() => {
       currentMonthCount++;
       return dayjs(new Date(year, 6, currentMonthCount));
     });
-    console.log("Fuck off", currentMonthCount);
     setWeekCount(currentMonthCount);
-    setWeekMatrix(weeksMatrix);
-    // return weeksMatrix;
+    setWeekData(weeksMatrix);
+  }
+
+  function handleWeekBackward() {
+    currentMonthCount = weekCount - 14; // going 2 weeks back and getting the next forward week value
+    const weeksMatrix = new Array(7).fill(null).map(() => {
+      currentMonthCount++;
+      return dayjs(new Date(year, 6, currentMonthCount));
+    });
+    setWeekCount(currentMonthCount);
+    setWeekData(weeksMatrix);
   }
 
   const timeArr = [];
@@ -61,19 +70,17 @@ export default function CalendarStructure() {
     timeArr.push(index);
   }
 
-  // const daysMatrix = new Array(5).fill([]).map(() => {
-  //   return new Array(7).fill(null).map(() => {
-  //     currentMonthCount++;
-  //     return dayjs(new Date(year, month, currentMonthCount));
-  //   });
-  // });
-
-  console.log("WEEK", weekMatrix);
-  const [collapsed, setCollapsed] = useState(false);
+  console.log("WEEK", weekData);
+  console.log("WEEK COUNT", weekCount);
 
   return (
     <div>
-      <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Navbar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        handleWeekForward={handleWeekForward}
+        handleWeekBackward={handleWeekBackward}
+      />
       <Row>
         <Col xs={24} xl={collapsed ? 1 : 4}>
           <Sidebar collapsed={collapsed} />
@@ -84,10 +91,9 @@ export default function CalendarStructure() {
           style={{ paddingLeft: collapsed ? "2vw" : "0" }}
         >
           <Day
-            day={weekMatrix}
+            day={weekData}
             timeArr={timeArr}
             currentMonthCount={currentMonthCount}
-            heheMatrix={heheMatrix}
           />
         </Col>
       </Row>

@@ -1,26 +1,6 @@
 import { useState } from "react";
 import "./EventModal.css";
-import { Card, Checkbox, Button, Dropdown, Menu, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-
-const menu = (
-  <Menu
-    items={[
-      {
-        label: "red",
-        key: "0",
-      },
-      {
-        label: "blue",
-        key: "1",
-      },
-      {
-        label: "yellow",
-        key: "2",
-      },
-    ]}
-  />
-);
+import { Card, Button } from "antd";
 
 export default function EventModal({
   eventModalInfo,
@@ -79,8 +59,6 @@ export default function EventModal({
           value={setUserEventInfo.description}
           onChange={(e) => handleNewEventDetails(e, "description")}
         />
-        <p>Card content</p>
-        <p>Card content</p>
         <p>{eventModalInfo && eventModalInfo.oneDay.format("DD-MMMM-YYYY")}</p>
 
         <select

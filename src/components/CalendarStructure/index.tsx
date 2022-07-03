@@ -6,26 +6,6 @@ import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 
 export default function CalendarStructure() {
-  // const [currentMonth, setCurrentMonth] : number = useState(dayjs().month());
-
-  // console.log(dayjs().format("MMMM YYYY"));
-  // console.log(dayjs().format("MMMM"));
-  // console.log(dayjs().format("YYYY"));
-  // console.log(dayjs().format("D"));
-  // console.log(dayjs().format("d"));
-  // console.log(dayjs().format("H"));
-  // console.log(dayjs().format("m"));
-  // console.log(dayjs().format("s"));
-  // console.log(dayjs().format("a"));
-  // console.log(dayjs().date());
-  // console.log(dayjs().day(30));
-  // console.log(dayjs().weekYear();
-  // console.log(dayjs('2018-06-27').week());
-  // console.log(dayjs().isoWeek());
-  // dayjs Difference
-
-  // console.log(dayjs().diff(dayjs("2018-06-27"), "day"));
-  // console.log("ÖKKK");
   const [collapsed, setCollapsed] = useState(false);
 
   const year = dayjs().year();
@@ -65,6 +45,7 @@ export default function CalendarStructure() {
     setWeekData(weeksMatrix);
   }
 
+  // 24hrs in a day
   const timeArr = [];
   for (let index = 0; index < 24; index++) {
     timeArr.push(index);

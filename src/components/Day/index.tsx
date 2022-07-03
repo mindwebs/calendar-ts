@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import "./Day.css";
-import { Typography, Row, Col, Divider } from "antd";
-
+import { Typography } from "antd";
 import EventModal from "../EventModal/EventModal";
-import { AnyRecord } from "dns";
+
+const { Title } = Typography;
 
 export default function Day({
   day,
@@ -13,8 +13,6 @@ export default function Day({
   handleWeekChange,
 }: any) {
   // console.log(day);
-  const { Title } = Typography;
-
   const [eventModalInfo, setEventModalInfo]: any = useState();
   const [openEventModal, setOpenEventModal]: any = useState(false);
   //Add events
@@ -32,8 +30,8 @@ export default function Day({
     console.log("events", events);
     setEachDayEvent(events);
   }, [savedEvents]);
-  console.log("eachDayEvent", eachDayEvent);
 
+  // Control eventCard Popup
   function handleOpenEventModal(oneDay: any, oneTime: number) {
     setEventModalInfo({ oneDay, oneTime });
     setOpenEventModal(true);
@@ -46,15 +44,16 @@ export default function Day({
 
   console.log("Saved Events", savedEvents);
 
+  // For scrollHandling in timeblocks
   var allTimesForEachDateDiv: any = useRef(null);
-  // console.log(allTimesForEachDateDiv);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollForTime, setScrollForTime] = useState(false);
+
   const allWithClass = Array.from(
     document.getElementsByClassName("alltimesForEachDate")
   );
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [scrollForTime, setScrollForTime] = useState(false);
+
   useEffect(() => {
-    // allTimesForEachDateDiv.current.scrollTop = scrollPosition;
     const updatePosition = () => {
       setScrollPosition(allTimesForEachDateDiv.current.scrollTop);
     };
@@ -67,18 +66,18 @@ export default function Day({
         updatePosition
       );
   }, []);
+
   useEffect(() => {
-    // console.log("Mu", allTimesForEachDateDiv.current!.scrollTop);
     console.log("allWithClass", allWithClass);
     allWithClass.forEach((el: any) => {
       el.scrollTop = scrollPosition;
     });
-    // allTimesForEachDateDiv.current!.scrollTop = scrollPosition;
   }, [scrollPosition]);
-  console.log("scrollPosition", scrollPosition);
+
   return (
     <>
       <div style={{ display: "flex", width: "98%" }}>
+        {/* For showing time on the left side */}
         <div style={{ width: "3vw" }}>
           <Title level={5} className="calendar_dayNames">
             &nbsp;{" "}
@@ -105,6 +104,7 @@ export default function Day({
           </div>
         </div>
 
+        {/* Each day & timeBlocks mapping */}
         {day.map((oneDay: any) => {
           return (
             <div style={{ width: "14.2%" }}>
@@ -163,7 +163,6 @@ export default function Day({
                               oneDay.format("DD-MM-YY") === event.dayMe &&
                               oneTime === event.startTime
                             ) {
-                              console.log("Wohooo", event);
                               return (
                                 <span
                                   style={{ backgroundColor: event.labelColor }}
@@ -182,6 +181,7 @@ export default function Day({
           );
         })}
 
+        {/* For Scrolling Feature in timeBlocks */}
         <div>
           <Title level={5} className="calendar_dayNames">
             &nbsp;{" "}

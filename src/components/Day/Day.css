@@ -1,5 +1,27 @@
+.calendar_dayNames {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem !important;
+}
+.calendar_timeHeadings {
+  position: relative;
+  top: -12px;
+  font-size: 0.8rem !important;
+}
+.dateDiv {
+  text-align: center;
+  margin: 0 0 1.5rem !important;
+}
 .date {
   font-weight: 500;
+  font-size: 1.6rem !important;
+  padding: 5px 9px 7px !important;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+.date:hover {
+  background-color: #dfdfdf !important;
 }
 .timeBlocks {
   border: 1px solid #dadce0;

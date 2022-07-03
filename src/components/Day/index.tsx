@@ -21,15 +21,6 @@ export default function Day({
   const [eachDayEvent, setEachDayEvent]: any = useState([]);
 
   useEffect(() => {
-    // const events = savedEvents.filter(
-    //   (evt: any) =>
-    //     dayjs(evt.day).format("DD-MM-YY") ===
-    //     day.map((oneDay: any) => {
-    //       console.log(dayjs(evt.day).format("DD-MM-YY"));
-    //       console.log("Pweasee", oneDay);
-    //       return oneDay.format("DD-MM-YY");
-    //     })
-    // );
     var events;
     events = day.map((oneDay: any) => {
       return savedEvents.filter(
@@ -56,10 +47,12 @@ export default function Day({
 
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", width: "98%" }}>
         <div style={{ width: "3vw" }}>
-          <Title level={5}>&nbsp; </Title>
-          <Title level={2} className="date">
+          <Title level={5} className="calendar_dayNames">
+            &nbsp;{" "}
+          </Title>
+          <Title level={2} className="dateDiv">
             &nbsp;
           </Title>
           {timeArr.map((oneTime: number) => {
@@ -68,9 +61,7 @@ export default function Day({
                 style={{ margin: "0", borderLeft: "none", height: "4rem" }}
                 className="timeBlocks"
               >
-                <span style={{ position: "relative", top: "-12px" }}>
-                  {oneTime}:00
-                </span>
+                <span className="calendar_timeHeadings">{oneTime}:00</span>
               </p>
             );
           })}
@@ -79,18 +70,37 @@ export default function Day({
         {day.map((oneDay: any) => {
           return (
             <div style={{ width: "14.2%" }}>
-              <Title level={5} style={{ textAlign: "center" }}>
-                {oneDay.format("ddd").toUpperCase()}
-              </Title>
-              <Title
-                level={2}
-                className="date"
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                {oneDay.format("DD")}
-              </Title>
+              <div>
+                <Title
+                  level={5}
+                  className="calendar_dayNames"
+                  style={{
+                    color:
+                      oneDay.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+                        ? "#1967D2"
+                        : "#70757a",
+                  }}
+                >
+                  {oneDay.format("ddd").toUpperCase()}
+                </Title>
+                <Title level={2} className="dateDiv">
+                  <span
+                    className="date"
+                    style={{
+                      color:
+                        oneDay.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+                          ? "#fff"
+                          : "#3C4043",
+                      backgroundColor:
+                        oneDay.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
+                          ? "#1967D2"
+                          : "#fff",
+                    }}
+                  >
+                    {oneDay.format("DD")}
+                  </span>
+                </Title>
+              </div>
               {timeArr.map((oneTime: number) => {
                 return (
                   <div

@@ -12,11 +12,11 @@ export default function Sidebar({ collapsed }: any) {
       <div
         style={{
           width: collapsed ? "100%" : "90%",
+          backgroundColor: "#fff",
         }}
       >
         <div className="logo" />
         <Menu
-          theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[

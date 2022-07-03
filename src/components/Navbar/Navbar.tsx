@@ -16,6 +16,7 @@ export default function Navbar({
   setCollapsed,
   handleWeekForward,
   handleWeekBackward,
+  currentTimelineHeading,
 }: any) {
   return (
     <>
@@ -55,7 +56,7 @@ export default function Navbar({
               onClick={() => handleWeekForward()}
             />
             <Title level={3} className="nav_currentMonth">
-              Calendar
+              {currentTimelineHeading}
             </Title>
           </Col>
         </Row>

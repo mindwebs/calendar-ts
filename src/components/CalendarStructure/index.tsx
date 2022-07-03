@@ -80,6 +80,7 @@ export default function CalendarStructure() {
         setCollapsed={setCollapsed}
         handleWeekForward={handleWeekForward}
         handleWeekBackward={handleWeekBackward}
+        currentTimelineHeading={weekData[3].format("MMMM YYYY")}
       />
       <Row>
         <Col xs={24} xl={collapsed ? 1 : 4}>

@@ -10,7 +10,7 @@
 }
 .dateDiv {
   text-align: center;
-  margin: 0 0 1.5rem !important;
+  margin: 0 0 1.3rem !important;
 }
 .date {
   font-weight: 500;
@@ -28,12 +28,10 @@
   border-bottom: none;
   border-right: none;
 }
-/* ::-webkit-scrollbar {
-  display: none;
-} */
 .alltimesForEachDate {
   position: relative;
-  height: 70vh !important;
+  height: 74vh !important;
+  padding-top: 0.2rem;
 }
 
 .alltimesForEachDate::-webkit-scrollbar {

@@ -94,7 +94,12 @@ export default function Day({
             {timeArr.map((oneTime: number) => {
               return (
                 <p
-                  style={{ margin: "0", borderLeft: "none", height: "4rem" }}
+                  style={{
+                    margin: "0",
+                    borderLeft: "none",
+                    height: "4rem",
+                    zIndex: "1",
+                  }}
                   className="timeBlocks"
                 >
                   <span className="calendar_timeHeadings">{oneTime}:00</span>

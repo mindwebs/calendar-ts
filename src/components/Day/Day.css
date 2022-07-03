@@ -28,3 +28,14 @@
   border-bottom: none;
   border-right: none;
 }
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+.alltimesForEachDate {
+  position: relative;
+  height: 70vh !important;
+}
+
+.alltimesForEachDate::-webkit-scrollbar {
+  display: none;
+}

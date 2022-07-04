@@ -32,8 +32,8 @@ export default function Day({
   }, [savedEvents]);
 
   // Control eventCard Popup
-  function handleOpenEventModal(oneDay: any, oneTime: number) {
-    setEventModalInfo({ oneDay, oneTime });
+  function handleOpenEventModal(oneDay: any, startTimeHr: number) {
+    setEventModalInfo({ oneDay, startTimeHr });
     setOpenEventModal(true);
   }
 
@@ -150,15 +150,15 @@ export default function Day({
                 }}
                 className="alltimesForEachDate"
               >
-                {timeArr.map((oneTime: number) => {
+                {timeArr.map((startTimeHr: number) => {
                   return (
                     <div
                       className="timeBlocks"
                       style={{ height: "4rem", cursor: "pointer" }}
-                      onClick={() => handleOpenEventModal(oneDay, oneTime)}
+                      onClick={() => handleOpenEventModal(oneDay, startTimeHr)}
                     >
                       <Title level={4} style={{ margin: "0" }}>
-                        {oneTime}
+                        {startTimeHr}
                       </Title>
                       <span>
                         {savedEvents.length > 0 &&
@@ -166,7 +166,7 @@ export default function Day({
                             console.log(event);
                             if (
                               oneDay.format("DD-MM-YY") === event.dayMe &&
-                              oneTime === event.startTime
+                              startTimeHr === event.startTimeHr
                             ) {
                               return (
                                 <span

@@ -1,12 +1,67 @@
+select::-ms-expand {
+  display: none;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+}
 .eventModalCard {
-  width: 300px;
+  width: 25rem;
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: 0;
+  z-index: 2;
 }
 .colorOptionsSelect {
   width: 20px;
   height: 20px;
   border-radius: 50%;
+}
+.eventModal_closeBtn {
+  position: relative;
+  top: 0;
+  left: 95%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.eventModal_titleTextField {
+  position: relative;
+  display: block;
+  width: 90%;
+  left: 10%;
+  margin: 0.5rem 0;
+  border-bottom: 1px solid #000;
+  font-size: 1.3rem;
+}
+.eventModal_titleTextField:hover {
+  border-bottom: 1px solid #000;
+}
+.eventModal_titleTextField:focus {
+  border-bottom: 1px solid #000;
+}
+.eventModal_titleTextField::placeholder {
+  font-size: 1.3rem;
+}
+.eventModal_timePickerMinBox {
+  width: 5rem;
+}
+.eventModal_timeHrSelect {
+  padding: 0.27rem 1rem;
+}
+.greyBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
 }

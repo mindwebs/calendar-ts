@@ -164,18 +164,41 @@ export default function Day({
                         {savedEvents.length > 0 &&
                           savedEvents.map((event: any) => {
                             console.log(event);
-                            if (
-                              oneDay.format("DD-MM-YY") === event.dayMe &&
-                              startTimeHr === event.startTimeHr
-                            ) {
-                              return (
-                                <span
-                                  style={{ backgroundColor: event.labelColor }}
-                                >
-                                  {event.title ? event.title : ""}
-                                </span>
-                              );
-                            }
+                            return (
+                              <div style={{ position: "relative" }}>
+                                {oneDay.format("DD-MM-YY") === event.dayMe &&
+                                startTimeHr === event.startTimeHr ? (
+                                  <span
+                                    style={{
+                                      // position: "absolute",
+                                      backgroundColor: event.labelColor,
+                                      height:
+                                        event.startTimeMin === 15
+                                          ? "25%"
+                                          : event.startTimeMin === 30
+                                          ? "50%"
+                                          : "75%",
+                                    }}
+                                  >
+                                    {event.title ? event.title : ""}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {oneDay.format("DD-MM-YY") === event.dayMe &&
+                                startTimeHr === event.endTimeHr ? (
+                                  <span
+                                    style={{
+                                      backgroundColor: event.labelColor,
+                                    }}
+                                  >
+                                    {event.title ? event.title : ""}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            );
                           })}
                       </span>
                     </div>

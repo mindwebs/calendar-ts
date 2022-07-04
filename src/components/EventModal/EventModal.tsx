@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./EventModal.css";
-import { Card, Button } from "antd";
+import { Card, Button, TimePicker } from "antd";
 
 export default function EventModal({
   eventModalInfo,
@@ -12,21 +12,23 @@ export default function EventModal({
   console.log("GET EVENT DATE", eventModalInfo);
 
   const labelColors = ["red", "blue", "yellow", "green"];
-  const minTime: string[] = ["00", "15", "30", "45"];
 
-  const [endTimeHrDropdownValues, setEndTimeHrDropdownValues] = useState<any[]>([])
+  const [endTimeHrDropdownValues, setEndTimeHrDropdownValues] = useState<any[]>(
+    []
+  );
 
   // Allowing only those values that comes after startTimeHr
   useEffect(() => {
-    console.log(eventModalInfo?.startTimeHr)
-      for (let eachHr = eventModalInfo?.startTimeHr; eachHr <= 23; eachHr++) {
-        console.log(eachHr + 1)
-        setEndTimeHrDropdownValues([...endTimeHrDropdownValues, eachHr+1])    
-      }
-      console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues)
-  }, [eventModalInfo])
+    var some = [];
+    for (let eachHr = eventModalInfo?.startTimeHr + 1; eachHr <= 23; eachHr++) {
+      console.log(eachHr + 1);
+      some.push(eachHr);
+    }
+    setEndTimeHrDropdownValues(some);
+    console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues);
+  }, [eventModalInfo]);
 
-  console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues)
+  console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues);
 
   const [userEventInfo, setUserEventInfo]: any = useState({
     title: "",
@@ -41,14 +43,21 @@ export default function EventModal({
   });
 
   function handleNewEventDetails(e: any, key: string) {
-    setUserEventInfo({
-      ...userEventInfo,
-      [key]: e.target.value,
-      day: eventModalInfo.oneDay.valueOf(),
-      dayMe: eventModalInfo.oneDay.format("DD-MM-YY"),
-      startTimeHr: eventModalInfo.startTimeHr,
-      id: Date.now(),
-    });
+    if (key === "startTimeMin" || key === "endTimeHr" || key === "endTimeMin") {
+      setUserEventInfo({
+        ...userEventInfo,
+        [key]: parseInt(e),
+      });
+    } else {
+      setUserEventInfo({
+        ...userEventInfo,
+        [key]: e.target.value,
+        day: eventModalInfo.oneDay.valueOf(),
+        dayMe: eventModalInfo.oneDay.format("DD-MM-YY"),
+        startTimeHr: eventModalInfo.startTimeHr,
+        id: Date.now(),
+      });
+    }
   }
   console.log(userEventInfo);
 
@@ -79,33 +88,28 @@ export default function EventModal({
         {/* Start Time */}
         <p>Start Time</p>
         <p>{eventModalInfo && eventModalInfo.oneDay.format("DD-MMMM-YYYY")}</p>
-        <select
-          value={setUserEventInfo.startTimeMin}
-          onChange={(e) => handleNewEventDetails(e, "startTimeMin")}
-        >
-          {minTime.map((eachMinTime: string) => {
-            return <option value={eachMinTime}>{eachMinTime}</option>;
-          })}
-        </select>
+        <p>{eventModalInfo && eventModalInfo.startTimeHr}</p>
+        <TimePicker
+          format="mm"
+          minuteStep={15}
+          onOk={(e) => handleNewEventDetails(e!.minute(), "startTimeMin")}
+        />
 
         {/* End Time */}
         <p>End Time</p>
         <select
           value={setUserEventInfo.endTimeHr}
-          onChange={(e) => handleNewEventDetails(e, "endTimeHr")}
+          onChange={(e) => handleNewEventDetails(e.target.value, "endTimeHr")}
         >
-          {endTimeHrDropdownValues.map((eachMinTime: string) => {
-            return <option value={eachMinTime}>{eachMinTime}</option>;
+          {endTimeHrDropdownValues.map((eachHrTime: string) => {
+            return <option value={eachHrTime}>{eachHrTime}</option>;
           })}
         </select>
-        <select
-          value={setUserEventInfo.endTimeMin}
-          onChange={(e) => handleNewEventDetails(e, "endTimeMin")}
-        >
-          {minTime.map((eachMinTime: string) => {
-            return <option value={eachMinTime}>{eachMinTime}</option>;
-          })}
-        </select>
+        <TimePicker
+          format="mm"
+          minuteStep={15}
+          onOk={(e) => handleNewEventDetails(e!.minute(), "endTimeMin")}
+        />
 
         {/* Colors */}
         <select

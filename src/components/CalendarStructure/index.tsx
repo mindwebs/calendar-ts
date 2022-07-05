@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
-import { Button, Col, Row, Menu } from "antd";
+import { Col, Row } from "antd";
 import Day from "../Day";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";

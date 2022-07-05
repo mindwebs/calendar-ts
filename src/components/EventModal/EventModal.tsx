@@ -73,6 +73,21 @@ export default function EventModal({
     handleCloseEventModal();
   }
 
+  function closeEventPopup() {
+    setUserEventInfo({
+      title: "",
+      description: "",
+      startTimeHr: "",
+      startTimeMin: "",
+      endTimeHr: "",
+      endTimeMin: "",
+      day: "",
+      labelColor: "blue",
+      id: "",
+    });
+    
+  }
+
   return (
     <>
       <Card

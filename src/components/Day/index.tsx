@@ -27,9 +27,11 @@ export default function Day({
           dayjs(evt.day).format("DD-MM-YY") === oneDay.format("DD-MM-YY")
       );
     });
+    events?.sort((a: any, b: any) => (a.startTimeHr > b.startTimeHr ? 1 : -1));
+
     console.log("events", events);
     setEachDayEvent(events);
-  }, [savedEvents]);
+  }, [day, savedEvents]);
 
   // Control eventCard Popup
   function handleOpenEventModal(oneDay: any, startTimeHr: number) {
@@ -57,11 +59,12 @@ export default function Day({
     const updatePosition = () => {
       setScrollPosition(allTimesForEachDateDiv.current.scrollTop);
     };
+    const allTimesForEachDate =  allTimesForEachDateDiv.current
 
-    allTimesForEachDateDiv.current.addEventListener("scroll", updatePosition);
+    allTimesForEachDate.addEventListener("scroll", updatePosition);
 
     return () =>
-      allTimesForEachDateDiv.current.removeEventListener(
+    allTimesForEachDate.removeEventListener(
         "scroll",
         updatePosition
       );
@@ -72,7 +75,7 @@ export default function Day({
     allWithClass.forEach((el: any) => {
       el.scrollTop = scrollPosition;
     });
-  }, [scrollPosition]);
+  }, [allWithClass, scrollPosition]);
 
   return (
     <>
@@ -157,35 +160,42 @@ export default function Day({
                       style={{ height: "4rem", cursor: "pointer" }}
                       onClick={() => handleOpenEventModal(oneDay, startTimeHr)}
                     >
-                      <Title level={4} style={{ margin: "0" }}>
+                      {/* <Title level={4} style={{ margin: "0" }}>
                         {startTimeHr}
-                      </Title>
+                      </Title> */}
                       <span>
                         {savedEvents.length > 0 &&
                           savedEvents.map((event: any) => {
                             console.log(event);
+                            if (startTimeHr === event.startTimeHr)  {
+                              console.log("Wohooooo", startTimeHr);
+                            }
                             return (
-                              <div style={{ position: "relative" }}>
+                              <div
+                                style={{ position: "relative", height: "100%" }}
+                              >
                                 {oneDay.format("DD-MM-YY") === event.dayMe &&
                                 startTimeHr === event.startTimeHr ? (
-                                  <span
+                                  <div
                                     style={{
-                                      // position: "absolute",
+                                      position: "absolute",
+
+                                      width: "100%",
                                       backgroundColor: event.labelColor,
-                                      height:
-                                        event.startTimeMin === 15
-                                          ? "25%"
-                                          : event.startTimeMin === 30
-                                          ? "50%"
-                                          : "75%",
+                                      // height:
+                                      //   event.startTimeMin === 15
+                                      //     ? "25%"
+                                      //     : event.startTimeMin === 30
+                                      //     ? "50%"
+                                      //     : "75%",
                                     }}
                                   >
                                     {event.title ? event.title : ""}
-                                  </span>
+                                  </div>
                                 ) : (
                                   ""
                                 )}
-                                {oneDay.format("DD-MM-YY") === event.dayMe &&
+                                {/* {oneDay.format("DD-MM-YY") === event.dayMe &&
                                 startTimeHr === event.endTimeHr ? (
                                   <span
                                     style={{
@@ -196,7 +206,7 @@ export default function Day({
                                   </span>
                                 ) : (
                                   ""
-                                )}
+                                )} */}
                               </div>
                             );
                           })}

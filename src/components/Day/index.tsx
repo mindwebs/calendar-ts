@@ -59,15 +59,12 @@ export default function Day({
     const updatePosition = () => {
       setScrollPosition(allTimesForEachDateDiv.current.scrollTop);
     };
-    const allTimesForEachDate =  allTimesForEachDateDiv.current
+    const allTimesForEachDate = allTimesForEachDateDiv.current;
 
     allTimesForEachDate.addEventListener("scroll", updatePosition);
 
     return () =>
-    allTimesForEachDate.removeEventListener(
-        "scroll",
-        updatePosition
-      );
+      allTimesForEachDate.removeEventListener("scroll", updatePosition);
   }, []);
 
   useEffect(() => {
@@ -76,6 +73,21 @@ export default function Day({
       el.scrollTop = scrollPosition;
     });
   }, [allWithClass, scrollPosition]);
+
+  function calculateEventDuration(
+    stTimeHr: number,
+    stTimeMin: number,
+    endTimeHr: number,
+    endTimeMin: number
+  ) {
+    const stTime = stTimeHr * 60 + stTimeMin;
+    const endTime = endTimeHr * 60 + endTimeMin;
+
+    const duration = endTime - stTime;
+    console.log("duration", duration);
+    const heightValue = ((duration / 15) * 25).toString() + "%";
+    return heightValue;
+  }
 
   return (
     <>
@@ -167,7 +179,7 @@ export default function Day({
                         {savedEvents.length > 0 &&
                           savedEvents.map((event: any) => {
                             console.log(event);
-                            if (startTimeHr === event.startTimeHr)  {
+                            if (startTimeHr === event.startTimeHr) {
                               console.log("Wohooooo", startTimeHr);
                             }
                             return (
@@ -182,12 +194,20 @@ export default function Day({
 
                                       width: "100%",
                                       backgroundColor: event.labelColor,
-                                      // height:
-                                      //   event.startTimeMin === 15
-                                      //     ? "25%"
-                                      //     : event.startTimeMin === 30
-                                      //     ? "50%"
-                                      //     : "75%",
+                                      height: calculateEventDuration(
+                                        event.startTimeHr,
+                                        event.startTimeMin,
+                                        event.endTimeHr,
+                                        event.endTimeMin
+                                      ),
+                                      top:
+                                        event.startTimeMin === 0
+                                          ? "0%"
+                                          : event.startTimeMin === 15
+                                          ? "25%"
+                                          : event.startTimeMin === 30
+                                          ? "50%"
+                                          : "75%",
                                     }}
                                   >
                                     {event.title ? event.title : ""}
@@ -252,6 +272,7 @@ export default function Day({
       <EventModal
         eventModalInfo={eventModalInfo}
         openEventModal={openEventModal}
+        setEventModalInfo={setEventModalInfo}
         handleCloseEventModal={handleCloseEventModal}
         savedEvents={savedEvents}
         setSavedEvents={setSavedEvents}

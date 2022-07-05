@@ -12,6 +12,7 @@ const { Title } = Typography;
 export default function EventModal({
   eventModalInfo,
   openEventModal,
+  setEventModalInfo,
   handleCloseEventModal,
   savedEvents,
   setSavedEvents,
@@ -71,9 +72,6 @@ export default function EventModal({
   function addNewEvent() {
     setSavedEvents([...savedEvents, userEventInfo]);
     handleCloseEventModal();
-  }
-
-  function closeEventPopup() {
     setUserEventInfo({
       title: "",
       description: "",
@@ -85,9 +83,10 @@ export default function EventModal({
       labelColor: "blue",
       id: "",
     });
-    
+    setEventModalInfo(null);
   }
 
+  console.log("userEventInfo", userEventInfo);
   return (
     <>
       <Card
@@ -108,7 +107,7 @@ export default function EventModal({
           placeholder="Add Title"
           bordered={false}
           className="eventModal_titleTextField"
-          value={setUserEventInfo.title}
+          value={userEventInfo.title}
           onChange={(e) => handleNewEventDetails(e, "title")}
         />
         <div style={{ display: "flex", margin: "0.8rem 0" }}>
@@ -152,12 +151,15 @@ export default function EventModal({
           {/* End Time */}
           <div>
             <select
-              value={setUserEventInfo.endTimeHr}
+              value={userEventInfo.endTimeHr}
               className="eventModal_timeHrSelect"
               onChange={(e) =>
                 handleNewEventDetails(e.target.value, "endTimeHr")
               }
             >
+              <option value="" disabled selected hidden>
+                hr
+              </option>
               {endTimeHrDropdownValues.map((eachHrTime: string) => {
                 return <option value={eachHrTime}>{eachHrTime}</option>;
               })}
@@ -183,7 +185,7 @@ export default function EventModal({
             borderBottom: "1px solid #000",
           }}
           // className="eventModal_titleTextField"
-          value={setUserEventInfo.description}
+          value={userEventInfo.description}
           onChange={(e) => handleNewEventDetails(e, "description")}
         />
 
@@ -200,7 +202,7 @@ export default function EventModal({
           </Title>
           <select
             className="eventModal_timeHrSelect"
-            value={setUserEventInfo.labelColor}
+            value={userEventInfo.labelColor}
             onChange={(e) => handleNewEventDetails(e, "labelColor")}
           >
             {labelColors.map((color: string) => {

@@ -10,3 +10,45 @@
   padding: 0;
   z-index: 2;
 }
+.existingEventModalCard_contentDivs {
+  display: flex;
+  align-items: center;
+}
+.existingEventModalCard_titleSquareIcon {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+.existingEventModalCard_title {
+  margin: 0 !important;
+  font-size: 1.5rem !important;
+  font-weight: 400 !important;
+}
+.existingEventModalCard_dateAndTime {
+  display: flex;
+  margin: auto 0 !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+}
+.existingEventModalCard_dateAndTimeBlackDot {
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 4px;
+  background-color: #333;
+  margin: auto 0.5rem !important;
+  vertical-align: middle;
+}
+.existingEventModalCard_descriptionIcon {
+  margin: auto 1rem auto 0 !important;
+  font-size: 0.95rem !important;
+  color: grey;
+}
+.existingEventModalCard_description {
+  display: block;
+  margin: auto 0 !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+}

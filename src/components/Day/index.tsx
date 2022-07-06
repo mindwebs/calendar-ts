@@ -95,10 +95,10 @@ export default function Day({
   const [existingEventCardPopupDetails, setExistingEventCardPopupDetails] =
     useState<object>({});
 
-  function onExistingEventClick(e: object) {
+  function onExistingEventClick(e: object, oneDay: object) {
     console.log("onExistingEventClick", e);
     setExistingEventCardPopup(true);
-    setExistingEventCardPopupDetails(e);
+    setExistingEventCardPopupDetails({ e, oneDay });
   }
 
   return (
@@ -205,7 +205,12 @@ export default function Day({
                                 {oneDay.format("DD-MM-YY") === event.dayMe &&
                                 startTimeHr === event.startTimeHr ? (
                                   <div
-                                    onClick={() => onExistingEventClick(event)}
+                                    onClick={() =>
+                                      onExistingEventClick(
+                                        event,
+                                        oneDay.format("MMMM D, YYYY")
+                                      )
+                                    }
                                     style={{
                                       position: "absolute",
                                       zIndex: "2",

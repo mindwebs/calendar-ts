@@ -2,8 +2,8 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { Col, Row } from "antd";
 import Day from "../Day";
-import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../Navbar";
+import Sidebar from "../Sidebar";
 
 export default function CalendarStructure() {
   const [collapsed, setCollapsed] = useState(false);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./EventModal.css";
+import "./CreateEventModal.css";
 import { Card, Button, TimePicker, Input, Typography } from "antd";
 import {
   CloseOutlined,
@@ -9,7 +9,7 @@ import {
 
 const { Title } = Typography;
 
-export default function EventModal({
+export default function CreateEventModal({
   eventModalInfo,
   openEventModal,
   setEventModalInfo,

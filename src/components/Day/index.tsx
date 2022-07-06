@@ -2,7 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import "./Day.css";
 import { Typography } from "antd";
-import EventModal from "../EventModal/EventModal";
+import CreateEventModal from "../CreateEventModal";
+import ShowExistingEventModal from "../ShowExistingEventModal";
 
 const { Title } = Typography;
 
@@ -89,6 +90,17 @@ export default function Day({
     return heightValue;
   }
 
+  const [existingEventCardPopup, setExistingEventCardPopup] =
+    useState<boolean>(false);
+  const [existingEventCardPopupDetails, setExistingEventCardPopupDetails] =
+    useState<object>({});
+
+  function onExistingEventClick(e: object) {
+    console.log("onExistingEventClick", e);
+    setExistingEventCardPopup(true);
+    setExistingEventCardPopupDetails(e);
+  }
+
   return (
     <>
       <div style={{ display: "flex", width: "98%" }}>
@@ -167,14 +179,20 @@ export default function Day({
               >
                 {timeArr.map((startTimeHr: number) => {
                   return (
-                    <div
-                      className="timeBlocks"
-                      style={{ height: "4rem", cursor: "pointer" }}
-                      onClick={() => handleOpenEventModal(oneDay, startTimeHr)}
-                    >
+                    <div style={{ position: "relative" }}>
                       {/* <Title level={4} style={{ margin: "0" }}>
                         {startTimeHr}
                       </Title> */}
+                      <div
+                        className="timeBlocks"
+                        style={{
+                          height: "4rem",
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          handleOpenEventModal(oneDay, startTimeHr)
+                        }
+                      ></div>
                       <span>
                         {savedEvents.length > 0 &&
                           savedEvents.map((event: any) => {
@@ -183,16 +201,15 @@ export default function Day({
                               console.log("Wohooooo", startTimeHr);
                             }
                             return (
-                              <div
-                                style={{ position: "relative", height: "100%" }}
-                              >
+                              <div>
                                 {oneDay.format("DD-MM-YY") === event.dayMe &&
                                 startTimeHr === event.startTimeHr ? (
                                   <div
+                                    onClick={() => onExistingEventClick(event)}
                                     style={{
                                       position: "absolute",
-
-                                      width: "100%",
+                                      zIndex: "2",
+                                      width: "90%",
                                       backgroundColor: event.labelColor,
                                       height: calculateEventDuration(
                                         event.startTimeHr,
@@ -208,6 +225,8 @@ export default function Day({
                                           : event.startTimeMin === 30
                                           ? "50%"
                                           : "75%",
+                                      cursor: "pointer",
+                                      // color: "#fff",
                                     }}
                                   >
                                     {event.title ? event.title : ""}
@@ -215,18 +234,6 @@ export default function Day({
                                 ) : (
                                   ""
                                 )}
-                                {/* {oneDay.format("DD-MM-YY") === event.dayMe &&
-                                startTimeHr === event.endTimeHr ? (
-                                  <span
-                                    style={{
-                                      backgroundColor: event.labelColor,
-                                    }}
-                                  >
-                                    {event.title ? event.title : ""}
-                                  </span>
-                                ) : (
-                                  ""
-                                )} */}
                               </div>
                             );
                           })}
@@ -269,13 +276,20 @@ export default function Day({
         </div>
       </div>
 
-      <EventModal
+      <CreateEventModal
         eventModalInfo={eventModalInfo}
         openEventModal={openEventModal}
         setEventModalInfo={setEventModalInfo}
         handleCloseEventModal={handleCloseEventModal}
         savedEvents={savedEvents}
         setSavedEvents={setSavedEvents}
+      />
+
+      <ShowExistingEventModal
+        existingEventCardPopup={existingEventCardPopup}
+        setExistingEventCardPopup={setExistingEventCardPopup}
+        existingEventCardPopupDetails={existingEventCardPopupDetails}
+        setExistingEventCardPopupDetails={setExistingEventCardPopupDetails}
       />
     </>
   );

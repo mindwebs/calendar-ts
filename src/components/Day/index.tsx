@@ -18,21 +18,6 @@ export default function Day({
   const [openEventModal, setOpenEventModal]: any = useState(false);
   //Add events
   const [savedEvents, setSavedEvents]: any = useState([]);
-  const [eachDayEvent, setEachDayEvent]: any = useState([]);
-
-  useEffect(() => {
-    var events;
-    events = day.map((oneDay: any) => {
-      return savedEvents.filter(
-        (evt: any) =>
-          dayjs(evt.day).format("DD-MM-YY") === oneDay.format("DD-MM-YY")
-      );
-    });
-    events?.sort((a: any, b: any) => (a.startTimeHr > b.startTimeHr ? 1 : -1));
-
-    console.log("events", events);
-    setEachDayEvent(events);
-  }, [day, savedEvents]);
 
   // Control eventCard Popup
   function handleOpenEventModal(oneDay: any, startTimeHr: number) {
@@ -180,9 +165,6 @@ export default function Day({
                 {timeArr.map((startTimeHr: number) => {
                   return (
                     <div style={{ position: "relative" }}>
-                      {/* <Title level={4} style={{ margin: "0" }}>
-                        {startTimeHr}
-                      </Title> */}
                       <div
                         className="timeBlocks"
                         style={{

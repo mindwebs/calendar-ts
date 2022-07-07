@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 
 const { Title } = Typography;
+const labelColors = ["red", "blue", "yellow", "green"];
 
 export default function CreateEventModal({
   eventModalInfo,
@@ -19,26 +20,10 @@ export default function CreateEventModal({
 }: any) {
   console.log("GET EVENT DATE", eventModalInfo);
 
-  const labelColors = ["red", "blue", "yellow", "green"];
-
   const [endTimeHrDropdownValues, setEndTimeHrDropdownValues] = useState<any[]>(
     []
   );
-
-  // Allowing only those values that comes after startTimeHr
-  useEffect(() => {
-    var some = [];
-    for (let eachHr = eventModalInfo?.startTimeHr + 1; eachHr <= 23; eachHr++) {
-      console.log(eachHr + 1);
-      some.push(eachHr);
-    }
-    setEndTimeHrDropdownValues(some);
-    console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues);
-  }, [eventModalInfo]);
-
-  console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues);
-
-  const [userEventInfo, setUserEventInfo]: any = useState({
+  const [userEventInfo, setUserEventInfo] = useState<any>({
     title: "",
     description: "",
     startTimeHr: "",
@@ -50,6 +35,19 @@ export default function CreateEventModal({
     id: "",
   });
 
+  // Allowing only those values for endTimeHr that comes after startTimeHr
+  useEffect(() => {
+    var filteredHrs = [];
+    for (let eachHr = eventModalInfo?.startTimeHr + 1; eachHr <= 23; eachHr++) {
+      console.log(eachHr + 1);
+      filteredHrs.push(eachHr);
+    }
+    setEndTimeHrDropdownValues(filteredHrs);
+  }, [eventModalInfo]);
+
+  console.log("setEndTimeHrDropdownValues", endTimeHrDropdownValues);
+
+  // Handling user inputs on onChange
   function handleNewEventDetails(e: any, key: string) {
     if (key === "startTimeMin" || key === "endTimeHr" || key === "endTimeMin") {
       setUserEventInfo({
@@ -69,6 +67,7 @@ export default function CreateEventModal({
   }
   console.log(userEventInfo);
 
+  // Adding new event on submit
   function addNewEvent() {
     setSavedEvents([...savedEvents, userEventInfo]);
     handleCloseEventModal();
@@ -90,10 +89,7 @@ export default function CreateEventModal({
   return (
     <>
       <Card
-        style={{
-          display: openEventModal ? "block" : "none",
-          padding: "0",
-        }}
+        style={{ display: openEventModal ? "block" : "none" }}
         className="eventModalCard"
       >
         <div>
@@ -102,32 +98,25 @@ export default function CreateEventModal({
             className="eventModal_closeBtn"
           />
         </div>
+        {/* Title */}
         <Input
           size="large"
           placeholder="Add Title"
           bordered={false}
-          className="eventModal_titleTextField"
+          className="eventModal_textFields eventModal_titleTextField"
           value={userEventInfo.title}
           onChange={(e) => handleNewEventDetails(e, "title")}
         />
-        <div style={{ display: "flex", margin: "0.8rem 0" }}>
-          <ClockCircleOutlined
-            style={{ margin: "auto 1rem auto 0", fontSize: "1.1rem" }}
-          />
-
-          <Title level={5} style={{ display: "block", margin: "auto 0" }}>
+        {/* Date Div */}
+        <div className="eventModal_dateDiv">
+          <ClockCircleOutlined className="eventModal_dateDivIcon" />
+          <Title level={5} className="eventModal_dateDivText">
             {eventModalInfo && eventModalInfo.oneDay.format("DD-MMMM-YYYY")}
           </Title>
         </div>
 
-        <div
-          style={{
-            paddingLeft: "1.95rem",
-            display: "flex",
-            margin: "0.8rem 0",
-            justifyContent: "space-between",
-          }}
-        >
+        {/* Time Div */}
+        <div className="eventModal_timeDiv">
           {/* Start Time */}
           <div>
             {eventModalInfo && (
@@ -146,7 +135,7 @@ export default function CreateEventModal({
             />
           </div>
           <div aria-label=" to ">
-            <span style={{ position: "relative", top: "0.25rem" }}>–</span>
+            <span className="eventModal_timeDivDashIcon">–</span>
           </div>
           {/* End Time */}
           <div>
@@ -157,11 +146,11 @@ export default function CreateEventModal({
                 handleNewEventDetails(e.target.value, "endTimeHr")
               }
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled selected hidden style={{color: "#C4C4C4", borderColor: "#C4C4C4"}}>
                 hr
               </option>
               {endTimeHrDropdownValues.map((eachHrTime: string) => {
-                return <option value={eachHrTime}>{eachHrTime}</option>;
+                return <option value={eachHrTime} style={{color: "#000"}}>{eachHrTime}</option>;
               })}
             </select>
             <TimePicker
@@ -178,26 +167,15 @@ export default function CreateEventModal({
           size="large"
           placeholder="Add Description"
           bordered={false}
-          style={{
-            width: "90%",
-            left: "10%",
-            margin: "0.5rem 0 1.5rem",
-            borderBottom: "1px solid #000",
-          }}
-          // className="eventModal_titleTextField"
+          className="eventModal_textFields eventModal_descriptionTextField"
           value={userEventInfo.description}
           onChange={(e) => handleNewEventDetails(e, "description")}
         />
 
         {/* Colors */}
         <div style={{ display: "flex" }}>
-          <BgColorsOutlined
-            style={{ margin: "auto 1rem auto 0", fontSize: "1.35rem" }}
-          />
-          <Title
-            level={5}
-            style={{ display: "block", margin: "auto 1rem auto 0" }}
-          >
+          <BgColorsOutlined className="eventModal_labelColorIcon" />
+          <Title level={5} className="eventModal_labelColorHeading">
             Choose color :{" "}
           </Title>
           <select
@@ -210,22 +188,18 @@ export default function CreateEventModal({
             })}
           </select>
         </div>
-        <hr style={{ margin: "1rem 0" }} />
-        <div style={{ position: "relative", height: "2rem" }}>
+        <hr style={{ margin: "1.5rem 0", borderColor: "#ededed" }} />
+
+        {/* Submit */}
+        <div className="eventModal_submitBtnDiv">
           <Button
-            style={{ position: "absolute", right: "0" }}
+            className="eventModal_submitBtn"
             onClick={() => addNewEvent()}
           >
-            Add Event
+            Save Event
           </Button>
         </div>
       </Card>
-      <div
-        style={{
-          display: openEventModal ? "block" : "none",
-        }}
-        className="greyBg"
-      ></div>
     </>
   );
 }

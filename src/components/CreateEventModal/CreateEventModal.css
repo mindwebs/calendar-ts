@@ -15,11 +15,8 @@ select {
   transform: translate(-50%, -50%);
   padding: 0;
   z-index: 2;
-}
-.colorOptionsSelect {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 }
 .eventModal_closeBtn {
   position: relative;
@@ -41,14 +38,48 @@ select {
   border-bottom: 1px solid #000;
   font-size: 1.3rem;
 }
-.eventModal_titleTextField:hover {
+.eventModal_textFields:hover {
   border-bottom: 1px solid #000;
 }
-.eventModal_titleTextField:focus {
-  border-bottom: 1px solid #000;
+.eventModal_textFields:focus {
+  border-bottom: 1px solid #1A73E8;
 }
 .eventModal_titleTextField::placeholder {
   font-size: 1.3rem;
+}
+.eventModal_descriptionTextField {
+  width: 90%;
+  left: 10%;
+  margin: 0.5rem 0 1.5rem;
+  border-bottom: 1px solid #000;
+}
+.eventModal_dateDiv {
+  display: flex;
+  margin: 0.8rem 0 !important;
+}
+.eventModal_dateDivIcon {
+  margin: auto 1rem auto 0;
+  font-size: 1.1rem;
+  color: #1A73E8;
+}
+.eventModal_dateDivText {
+  display: block;
+  margin: auto 0 !important;
+}
+.colorOptionsSelect {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.eventModal_timeDiv {
+  padding-left: 1.95rem;
+  display: flex;
+  margin: 0.8rem 0;
+  justify-content: space-between;
+}
+.eventModal_timeDivDashIcon {
+  position: relative;
+  top: 0.25rem;
 }
 .eventModal_timePickerMinBox {
   width: 5rem;
@@ -56,12 +87,29 @@ select {
 .eventModal_timeHrSelect {
   padding: 0.27rem 1rem;
 }
-.greyBg {
+.eventModal_labelColorIcon {
+  margin: auto 1rem auto 0 !important; 
+  font-size: 1.35rem;
+  color: #1A73E8;
+}
+.eventModal_labelColorHeading {
+  display: block; 
+  margin: auto 1rem auto 0 !important;
+}
+.eventModal_submitBtn {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 1;
+  right: 0;
+  background-color: #1A73E8;
+  color: #fff;
+  font-weight: 500;
+  height: 2.1rem;
+  border-radius: 4px;
+}
+.eventModal_submitBtn:hover {
+  background-color: #1254aa;
+  color: #fff;
+}
+.eventModal_submitBtnDiv {
+  position: relative;
+  height: 2rem;
 }

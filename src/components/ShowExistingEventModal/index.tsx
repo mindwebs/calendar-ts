@@ -49,7 +49,7 @@ export default function ShowExistingEventModal({
               (existingEventCardPopupDetails.e?.startTimeMin === 0
                 ? "00"
                 : existingEventCardPopupDetails.e?.startTimeMin) +
-              " - " +
+              " – " +
               existingEventCardPopupDetails.e?.endTimeHr +
               ":" +
               (existingEventCardPopupDetails.e?.endTimeMin === 0

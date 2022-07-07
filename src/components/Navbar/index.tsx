@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import "./Navbar.css";
 import {
   MenuFoldOutlined,

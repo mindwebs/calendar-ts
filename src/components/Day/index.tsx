@@ -16,8 +16,17 @@ export default function Day({
   // console.log(day);
   const [eventModalInfo, setEventModalInfo]: any = useState();
   const [openEventModal, setOpenEventModal]: any = useState(false);
+  // Scroll state handler for timeBlocks
+  var allTimesForEachDateDiv: any = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollForTime, setScrollForTime] = useState(false);
   //Add events
   const [savedEvents, setSavedEvents]: any = useState([]);
+  //Existing event
+  const [existingEventCardPopup, setExistingEventCardPopup] =
+    useState<boolean>(false);
+  const [existingEventCardPopupDetails, setExistingEventCardPopupDetails] =
+    useState<object>({});
 
   // Control eventCard Popup
   function handleOpenEventModal(oneDay: any, startTimeHr: number) {
@@ -33,11 +42,7 @@ export default function Day({
   console.log("Saved Events", savedEvents);
 
   // For scrollHandling in timeblocks
-  var allTimesForEachDateDiv: any = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [scrollForTime, setScrollForTime] = useState(false);
-
-  const allWithClass = Array.from(
+  const allTimeBlocksForEachDate = Array.from(
     document.getElementsByClassName("alltimesForEachDate")
   );
 
@@ -46,20 +51,19 @@ export default function Day({
       setScrollPosition(allTimesForEachDateDiv.current.scrollTop);
     };
     const allTimesForEachDate = allTimesForEachDateDiv.current;
-
     allTimesForEachDate.addEventListener("scroll", updatePosition);
-
     return () =>
       allTimesForEachDate.removeEventListener("scroll", updatePosition);
   }, []);
 
   useEffect(() => {
-    console.log("allWithClass", allWithClass);
-    allWithClass.forEach((el: any) => {
+    // console.log("allTimeBlocksForEachDate", allTimeBlocksForEachDate);
+    allTimeBlocksForEachDate.forEach((el: any) => {
       el.scrollTop = scrollPosition;
     });
-  }, [allWithClass, scrollPosition]);
+  }, [allTimeBlocksForEachDate, scrollPosition]);
 
+  // Calculating event duration
   function calculateEventDuration(
     stTimeHr: number,
     stTimeMin: number,
@@ -70,18 +74,14 @@ export default function Day({
     const endTime = endTimeHr * 60 + endTimeMin;
 
     const duration = endTime - stTime;
-    console.log("duration", duration);
+    // console.log("duration", duration);
     const heightValue = ((duration / 15) * 25).toString() + "%";
     return heightValue;
   }
 
-  const [existingEventCardPopup, setExistingEventCardPopup] =
-    useState<boolean>(false);
-  const [existingEventCardPopupDetails, setExistingEventCardPopupDetails] =
-    useState<object>({});
-
+  // Exisiting event click handler
   function onExistingEventClick(e: object, oneDay: object) {
-    console.log("onExistingEventClick", e);
+    // console.log("onExistingEventClick", e);
     setExistingEventCardPopup(true);
     setExistingEventCardPopupDetails({ e, oneDay });
   }

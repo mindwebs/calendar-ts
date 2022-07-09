@@ -79,11 +79,27 @@ export default function Day({
     return heightValue;
   }
 
-  // Exisiting event click handler
+  // Existing event click handler
   function onExistingEventClick(e: object, oneDay: object) {
     // console.log("onExistingEventClick", e);
     setExistingEventCardPopup(true);
     setExistingEventCardPopupDetails({ e, oneDay });
+  }
+
+  // Background colors for event
+  function setEventBgColor(labelColor: string) {
+    switch (labelColor) {
+      case "red":
+        return "#D50000";
+      case "blue":
+        return "#039BE5";
+      case "yellow":
+        return "#F6BF26";
+      case "green":
+        return "#0B8043";
+      default:
+        return "#039BE5";
+    }
   }
 
   return (
@@ -197,7 +213,10 @@ export default function Day({
                                       position: "absolute",
                                       zIndex: "2",
                                       width: "90%",
-                                      backgroundColor: event.labelColor,
+                                      borderRadius: "6px",
+                                      backgroundColor: setEventBgColor(
+                                        event.labelColor
+                                      ),
                                       height: calculateEventDuration(
                                         event.startTimeHr,
                                         event.startTimeMin,
@@ -213,7 +232,9 @@ export default function Day({
                                           ? "50%"
                                           : "75%",
                                       cursor: "pointer",
-                                      // color: "#fff",
+                                      color: "#fff",
+                                      paddingLeft: "0.8vw",
+                                      paddingTop: "0.5vw",
                                     }}
                                   >
                                     {event.title ? event.title : ""}
